@@ -78,6 +78,7 @@ around dispatch => sub {
 
     if ( $c->_static_file ) {
         if ( $c->config->{'Plugin::Static::Simple'}->{no_logs} && $c->log->can('abort') ) {
+           warn "call \$c->log->abort( 1 )";
            $c->log->abort( 1 );
         }
         return $c->_serve_static;

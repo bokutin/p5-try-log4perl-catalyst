@@ -120,11 +120,14 @@ sub new {
 sub _flush {
 ##################################################
     my ($self) = @_;
+    warn "enter _flush from @{[ join ':L', (caller)[0,2] ]}";
 
     for my $appender (values %Log::Log4perl::Logger::APPENDER_BY_NAME) {
         next if $appender->{name} !~ /_$CATALYST_APPENDER_SUFFIX$/;
 
+        warn "call \$self->abort()";
         if ($self->abort) {
+            warn "call \$self->abort(undef)";
             $self->abort(undef);
             $appender->{appender}{buffer} = [];
         }
@@ -138,6 +141,7 @@ sub _flush {
 sub abort {
 ##################################################
     my $self = shift;
+    warn "enter abort from @{[ join ':L', (caller)[0,2] ]}";
 
     $self->{abort} = $_[0] if @_;
 
